@@ -1,13 +1,11 @@
-export class LinkedList;
-
-class LinkedList {
+export class LinkedList {
   constructor() {
     this.header = null;
   }
 
-  append(value) {
+  append(key, value) {
     // adds a new node containing value to the end of the list.
-    const newNode = new Node(value);
+    const newNode = new Node(key, value);
     if (this.header === null) {
       this.header = newNode;
       newNode.next = null;
@@ -21,9 +19,9 @@ class LinkedList {
     newNode.next = null; 
   }
 
-  prepend(value) {
+  prepend(key, value) {
     // adds a new node containing value to the start of the list.
-    const newNode = new Node(value);
+    const newNode = new Node(key, value);
     newNode.next = this.header;
     this.header = newNode;
   }
@@ -136,10 +134,8 @@ class LinkedList {
 }
 
 class Node {
-  constructor(data) {
-    this.data = data;
+  constructor(key, value) {
+    this.data = {key: key, value: value};
     this.next = null;
   }
 }
-
-

@@ -21,11 +21,13 @@ class HashMap {
     // takes two arguments: the first is a key, and the second is a value that is assigned to this key.     
     // If a key already exists, then the old value is overwritten, and we can say that we update the key’s value 
     const hashCode = this.hash(key);
-    if (this.has(key)) {
+    if (this.has(key) || this.bucket[hashCode] === null) {
       this.bucket[hashCode] = {key: key, value: value};
     }
     if (this.bucket[hashCode] !== null) {
       // Create LinkedList
+      const newLinkedList = new LinkedList();
+      newLinkedList.append(key, value);
     }
     console.log(hashCode);
     this.expandCapacity();
@@ -47,7 +49,7 @@ class HashMap {
     if (hashCode < 0 || hashCode > this.capacity) {
       return false;
     }
-    if (this.bucket[hashCode].key === key) {
+    if (this.bucket[hashCode] !== null && this.bucket[hashCode].key === key) {
       return true;
     }
    return false; 
@@ -154,21 +156,21 @@ console.log(test.bucket);
 console.log(`Current Load Factor: ` + test.currentLoadFactor());
 console.log(test.bucket);
 
-console.log(`Key lion has value:`, test.get('lion'));
-console.log(`Key rhino has value: ` + test.get('rhino'));
-
-console.log(`Has key lion: ` + test.has('lion'));
-console.log(`Has key rhino: ` + test.has('rhino'));
-
-console.log(`Remove key lion: ` + test.remove('lion'));
-console.log(`Remove key rhino: ` + test.remove('rhino'));
-console.log(test.bucket);
-console.log(test.length());
-
-console.log(test.entries());
-console.log(test.values());
-console.log(test.keys());
-
-test.clear();
-console.log(test.bucket);
+// console.log(`Key lion has value:`, test.get('lion'));
+// console.log(`Key rhino has value: ` + test.get('rhino'));
+//
+// console.log(`Has key lion: ` + test.has('lion'));
+// console.log(`Has key rhino: ` + test.has('rhino'));
+//
+// console.log(`Remove key lion: ` + test.remove('lion'));
+// console.log(`Remove key rhino: ` + test.remove('rhino'));
+// console.log(test.bucket);
+// console.log(test.length());
+//
+// console.log(test.entries());
+// console.log(test.values());
+// console.log(test.keys());
+//
+// test.clear();
+// console.log(test.bucket);
 
