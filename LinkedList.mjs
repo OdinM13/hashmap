@@ -71,7 +71,7 @@ export class LinkedList {
       let tmp = this.header;
       let value = "";
       for (let i = 0; i <= index; i++) {
-        value = tmp.data;
+        value = tmp.data.value;
         tmp = tmp.next;
       }
       return value;
@@ -89,7 +89,7 @@ export class LinkedList {
     }
   }
 
-  contains(value) {
+  containsValue(value) {
     // returns true if the passed in value is in the list and otherwise returns false.
     if (this.header === null) {
       return false;
@@ -104,13 +104,28 @@ export class LinkedList {
     return false;
   }
 
-  findIndex(value) {
-    // returns the index of the node containing the given value. If the value can’t be found in the list, it should return -1. 
-    // If more than one node has a value matching the given value, it should return the index of the first node with the matching value.
+    containsKey(key) {
+    // returns true if the passed in key is in the list and otherwise returns false.
+    if (this.header === null) {
+      return false;
+    }
+    let tmp = this.header;
+    while (tmp !== null) {
+      if (tmp.data.key === key) {
+        return true;
+      }
+      tmp = tmp.next;
+    }
+    return false;
+  }
+
+  findIndex(key) {
+    // returns the index of the node containing the given key. If the key can’t be found in the list, it should return -1. 
+    // If more than one node has a key matching the given value, it should return the index of the first node with the matching key.
     let tmp = this.header;
     let counter = 0;
     while (tmp !== null) {
-      if (tmp.data === value) {
+      if (tmp.data.key === key) {
         return counter;
       }
       tmp = tmp.next;

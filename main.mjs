@@ -21,13 +21,12 @@ class HashMap {
     // takes two arguments: the first is a key, and the second is a value that is assigned to this key.     
     // If a key already exists, then the old value is overwritten, and we can say that we update the key’s value 
     const hashCode = this.hash(key);
-    if (this.has(key) || this.bucket[hashCode] === null) {
-      this.bucket[hashCode] = {key: key, value: value};
-    }
-    if (this.bucket[hashCode] !== null) {
-      // Create LinkedList
+    if (this.bucket[hashCode] === null) {
       const newLinkedList = new LinkedList();
       newLinkedList.append(key, value);
+      this.bucket[hashCode] = newLinkedList;
+    } else if (this.bucket[hashCode] !== null) {
+      this.bucket[hashCode].append(key, value);
     }
     console.log(hashCode);
     this.expandCapacity();
@@ -39,7 +38,8 @@ class HashMap {
       return null;
     }
     const hashCode = this.hash(key);
-    const returnValue = this.bucket[hashCode].value;
+    const index = this.bucket[hashCode].findIndex(key);
+    const returnValue = this.bucket[hashCode].at(index);
     return returnValue;
   }
 
@@ -49,7 +49,7 @@ class HashMap {
     if (hashCode < 0 || hashCode > this.capacity) {
       return false;
     }
-    if (this.bucket[hashCode] !== null && this.bucket[hashCode].key === key) {
+    if (this.bucket[hashCode] !== null && this.bucket[hashCode].containsKey(key)) {
       return true;
     }
    return false; 
@@ -71,7 +71,7 @@ class HashMap {
     let count = 0;
     this.bucket.forEach(e => {
       if (e !== null) {
-        count ++;
+        count = count + e.size();
       }
     });
     return count;
@@ -85,12 +85,10 @@ class HashMap {
   expandCapacity() {
     if (this.currentLoadFactor() > this.loadFactor) {
       this.capacity *= 2;
-      const tmpBucket = this.bucket;
+      const allKeyValuePairs = this.entries();
       this.bucket = new Array(this.capacity).fill(null);
-      tmpBucket.forEach(e => {
-        if (e !== null) {
-          set(e.key, e.value);
-        }
+      allKeyValuePairs.forEach(e => {
+        this.set(e.key, e.value);
       })
     }
   }
@@ -101,6 +99,7 @@ class HashMap {
   }
 
   keys() {
+    // NOCH OFFEN
     // returns an array containing all the keys inside the hash map
     let keysArray = [];
     this.bucket.forEach(e => {
@@ -112,6 +111,7 @@ class HashMap {
   }
 
   values() {
+    // NOCH OFFEN
     // returns an array containing all the values
     let valuesArray = [];
     this.bucket.forEach(e => {
@@ -127,7 +127,10 @@ class HashMap {
     let entriesArray = [];
     this.bucket.forEach(e => {
       if (e !== null) {
-        entriesArray.push(e);
+        const size = e.size();
+        for (let i = 0; i < size; i++) {
+          entriesArray.push(e.pop());
+        }
       }
     });
     return entriesArray;
@@ -148,29 +151,29 @@ test.set('ice cream', 'white');
 test.set('jacket', 'blue');
 test.set('kite', 'pink');
 test.set('lion', 'golden');
-console.log(test.bucket);
+
+console.dir(test.bucket, { depth: null});
 console.log(test.length());
 console.log(`Current Load Factor: ` + test.currentLoadFactor());
-test.set('moon', 'silver');
-console.log(test.bucket);
-console.log(`Current Load Factor: ` + test.currentLoadFactor());
-console.log(test.bucket);
 
-// console.log(`Key lion has value:`, test.get('lion'));
-// console.log(`Key rhino has value: ` + test.get('rhino'));
-//
-// console.log(`Has key lion: ` + test.has('lion'));
-// console.log(`Has key rhino: ` + test.has('rhino'));
-//
+test.set('moon', 'silver');
+console.dir(test.bucket, { depth: null});
+console.log(`Current Load Factor: ` + test.currentLoadFactor());
+
+console.log(`Key lion has value:`, test.get('lion'));
+console.log(`Key rhino has value: ` + test.get('rhino'));
+
+console.log(`Has key lion: ` + test.has('lion'));
+console.log(`Has key rhino: ` + test.has('rhino'));
+
 // console.log(`Remove key lion: ` + test.remove('lion'));
 // console.log(`Remove key rhino: ` + test.remove('rhino'));
 // console.log(test.bucket);
 // console.log(test.length());
-//
-// console.log(test.entries());
+
+console.dir(test.entries(), { depth: null });
 // console.log(test.values());
 // console.log(test.keys());
 //
 // test.clear();
 // console.log(test.bucket);
-
