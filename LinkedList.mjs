@@ -89,22 +89,39 @@ export class LinkedList {
     }
   }
 
+  removeNode(key) {
+    if (this.header === null) {
+      return undefined;
+    } 
+    // I need the Node before the key matches 
+    let tmp = this.header;
+    while (tmp !== null) {
+      if (tmp.data.key === key) {
+
+      }
+      tmp = tmp.next;
+    }
+    return -1;
+  }
+
   containsValue(value) {
     // returns true if the passed in value is in the list and otherwise returns false.
     if (this.header === null) {
       return false;
     }
     let tmp = this.header;
+    let tmpPrev = this.header;
     while (tmp !== null) {
       if (tmp.data === value) {
         return true;
       }
+      tmpPrev = tmp;
       tmp = tmp.next;
     }
     return false;
   }
 
-    containsKey(key) {
+  containsKey(key) {
     // returns true if the passed in key is in the list and otherwise returns false.
     if (this.header === null) {
       return false;

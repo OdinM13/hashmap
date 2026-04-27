@@ -62,7 +62,11 @@ class HashMap {
       return false;
     }
     const hashCode = this.hash(key);
-    this.bucket[hashCode] = null;
+    if (this.bucket[hashcode].header.next === null) {
+      this.bucket[hashCode] = null;
+    } else {
+      this.bucket[hashCode].removeNode(key);
+    }
     return true;
   }
 
@@ -176,4 +180,4 @@ console.dir(test.entries(), { depth: null });
 // console.log(test.keys());
 //
 // test.clear();
-// console.log(test.bucket);
+// console.dir(test.bucket, { depth: null});
