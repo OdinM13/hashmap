@@ -93,12 +93,18 @@ export class LinkedList {
     if (this.header === null) {
       return undefined;
     } 
-    // I need the Node before the key matches 
     let tmp = this.header;
+    let tmpPrev = null;
     while (tmp !== null) {
       if (tmp.data.key === key) {
-
+        if (tmpPrev === null) {
+          this.header = tmp.next;
+        } else {
+          tmpPrev.next = tmp.next;
+          tmp.next = null;
+        }
       }
+      tmpPrev = tmp;
       tmp = tmp.next;
     }
     return -1;
@@ -110,12 +116,10 @@ export class LinkedList {
       return false;
     }
     let tmp = this.header;
-    let tmpPrev = this.header;
     while (tmp !== null) {
       if (tmp.data === value) {
         return true;
       }
-      tmpPrev = tmp;
       tmp = tmp.next;
     }
     return false;

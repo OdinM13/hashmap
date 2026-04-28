@@ -62,7 +62,7 @@ class HashMap {
       return false;
     }
     const hashCode = this.hash(key);
-    if (this.bucket[hashcode].header.next === null) {
+    if (this.bucket[hashCode].header.next === null) {
       this.bucket[hashCode] = null;
     } else {
       this.bucket[hashCode].removeNode(key);
@@ -161,6 +161,7 @@ console.log(test.length());
 console.log(`Current Load Factor: ` + test.currentLoadFactor());
 
 test.set('moon', 'silver');
+console.log(test.length());
 console.dir(test.bucket, { depth: null});
 console.log(`Current Load Factor: ` + test.currentLoadFactor());
 
@@ -170,10 +171,11 @@ console.log(`Key rhino has value: ` + test.get('rhino'));
 console.log(`Has key lion: ` + test.has('lion'));
 console.log(`Has key rhino: ` + test.has('rhino'));
 
-// console.log(`Remove key lion: ` + test.remove('lion'));
-// console.log(`Remove key rhino: ` + test.remove('rhino'));
-// console.log(test.bucket);
-// console.log(test.length());
+console.log(`Remove key lion: ` + test.remove('lion'));
+// console.log(`Remove key dog: ` + test.remove('dog'));
+console.log(`Remove key rhino: ` + test.remove('rhino'));
+console.dir(test.bucket, { depth: null});
+console.log(test.length());
 
 console.dir(test.entries(), { depth: null });
 // console.log(test.values());
