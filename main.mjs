@@ -103,24 +103,30 @@ class HashMap {
   }
 
   keys() {
-    // NOCH OFFEN
     // returns an array containing all the keys inside the hash map
     let keysArray = [];
     this.bucket.forEach(e => {
       if (e !== null) {
-        keysArray.push(e.key);
+        const size = e.size();
+        for (let i = 0; i < size; i++) {
+          let value = e.returnData();
+          keysArray.push(value.key);
+        }
       }
     });
     return keysArray;
   }
 
   values() {
-    // NOCH OFFEN
     // returns an array containing all the values
     let valuesArray = [];
     this.bucket.forEach(e => {
       if (e !== null) {
-        valuesArray.push(e.value);
+        const size = e.size();
+        for (let i = 0; i < size; i++) {
+          let value = e.returnData();
+          valuesArray.push(value.value);
+        }
       }
     });
     return valuesArray;
@@ -128,6 +134,7 @@ class HashMap {
 
   entries() {
     // returns an array that contains each key, value pair.
+    // Destroys the hashmap, because values get popped
     let entriesArray = [];
     this.bucket.forEach(e => {
       if (e !== null) {
@@ -177,9 +184,8 @@ console.log(`Remove key rhino: ` + test.remove('rhino'));
 console.dir(test.bucket, { depth: null});
 console.log(test.length());
 
+console.log(test.values());
+console.log(test.keys());
+
 console.dir(test.entries(), { depth: null });
-// console.log(test.values());
-// console.log(test.keys());
-//
 // test.clear();
-// console.dir(test.bucket, { depth: null});

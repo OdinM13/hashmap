@@ -89,6 +89,15 @@ export class LinkedList {
     }
   }
 
+  returnData() {
+    if (this.header === null) {
+      return undefined;
+    } else {
+      const data = this.header.data;
+      return data;
+    }
+  }
+
   removeNode(key) {
     if (this.header === null) {
       return undefined;
